@@ -3,7 +3,9 @@ package org.spring.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.PropertyValues;
+import org.spring.entity.PropertyValue;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,7 +16,7 @@ public class BeanDefinition {
     private Class<?> beanClass;
     private String beanClassName;
     private Boolean singleton;    // 是否是单例模式
-    private PropertyValues propertyValues;    // Bean的属性
+    private List<PropertyValue> propertyValues;    // Bean的属性
 
     public boolean isSingleton() {
         return this.singleton;
