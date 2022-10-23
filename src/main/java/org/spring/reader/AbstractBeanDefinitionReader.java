@@ -15,6 +15,9 @@ import java.util.Map;
 @AllArgsConstructor
 public abstract class AbstractBeanDefinitionReader implements BeanDefinitionReader {
 
+    /**
+     * 存储Bean的名称和BeanDefinition的映射关系，供工厂使用
+     */
     private final Map<String, BeanDefinition> registry;
 
     private final ResourceLoader resourceLoader;

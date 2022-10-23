@@ -67,6 +67,10 @@ public abstract class AbstractBeanFactory implements BeanFactory {
      */
     abstract Object doCreateBean(BeanDefinition beanDefinition) throws Exception;
 
+    /**
+     * 批量创建bean
+     * @throws Exception
+     */
     public void populateBeans() throws Exception {
         for (Map.Entry<String, BeanDefinition> entry : beanDefinitionMap.entrySet()) {
             doCreateBean(entry.getValue());

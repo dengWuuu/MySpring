@@ -12,8 +12,15 @@ import java.lang.reflect.Field;
  */
 public class AutowiredCapableBeanFactory extends AbstractBeanFactory {
 
+    /**
+     * 创建Bean
+     * @param beanDefinition Bean定义对象
+     * @return beanDefinition
+     * @throws Exception 异常
+     */
     @Override
     Object doCreateBean(BeanDefinition beanDefinition) throws Exception {
+        //TODO: 这时候BeanDefinition的BeanClass为空不知道是什么类型的对象
         //单例且存在直接返回
         if (beanDefinition.isSingleton() && beanDefinition.getBean() != null) {
             return beanDefinition.getBean();
@@ -28,10 +35,9 @@ public class AutowiredCapableBeanFactory extends AbstractBeanFactory {
 
     /**
      * 为新创建了bean注入属性
-     *
      * @param bean           待注入属性的bean
      * @param beanDefinition bean的定义
-     * @throws Exception 反射异常
+     * @throws Exception     反射异常
      */
     void applyPropertyValues(Object bean, BeanDefinition beanDefinition) throws Exception {
         for (PropertyValue propertyValue : beanDefinition.getPropertyValues()) {
