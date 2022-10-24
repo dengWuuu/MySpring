@@ -2,6 +2,7 @@ package org.spring.factory;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.spring.annotation.Component;
 import org.spring.entity.BeanDefinition;
 
 import java.util.Map;

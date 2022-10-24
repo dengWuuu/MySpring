@@ -20,7 +20,6 @@ public class AutowiredCapableBeanFactory extends AbstractBeanFactory {
      */
     @Override
     Object doCreateBean(BeanDefinition beanDefinition) throws Exception {
-        //TODO: 这时候BeanDefinition的BeanClass为空不知道是什么类型的对象
         //单例且存在直接返回
         if (beanDefinition.isSingleton() && beanDefinition.getBean() != null) {
             return beanDefinition.getBean();

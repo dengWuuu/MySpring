@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans>
 
+<!--    <beans>-->
+<!--        <component-scan base-package="org.spring"/>-->
+<!--    </beans>-->
+
     <bean id="helloWorldService" class="org.spring.HelloWorldServiceImpl" scope="prototype">
         <property name="text" value="Hello World"/>
     </bean>
@@ -8,5 +12,6 @@
     <bean id="wrapService" class="org.spring.WrapService">
         <property name="helloWorldService" ref="helloWorldService"/>
     </bean>
+
 
 </beans>
