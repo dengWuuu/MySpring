@@ -36,7 +36,7 @@ public class ClassPathXmlApplicationContext extends AbstractApplicationContext {
     }
 
     /**
-     * 创建Bean工厂并且扫描Bean的信息
+     * 创建Bean工厂并且通过Reader读取XML扫描Bean的信息
      * @return
      * @throws Exception
      */
@@ -44,6 +44,7 @@ public class ClassPathXmlApplicationContext extends AbstractApplicationContext {
         XmlBeanDefinitionReader beanDefinitionReader = new XmlBeanDefinitionReader(new ResourceLoader());
         beanDefinitionReader.loadBeanDefinitions(location);
         AbstractBeanFactory beanFactory = new AutowiredCapableBeanFactory();
+        //获取Reader的注册map读取注入的Bean
         for (Map.Entry<String, BeanDefinition> beanDefinitionEntry : beanDefinitionReader.getRegistry().entrySet()) {
             beanFactory.registerBeanDefinition(beanDefinitionEntry.getKey(), beanDefinitionEntry.getValue());
         }

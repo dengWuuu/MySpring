@@ -15,7 +15,6 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Slf4j
 public abstract class AbstractBeanFactory implements BeanFactory {
-    //个人只能想到要用map去存
     ConcurrentHashMap<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>();
 
     //TODO 将getBean里面只调用一个写好的doGetBean模仿Spring里面实现

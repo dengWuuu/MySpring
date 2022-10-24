@@ -14,7 +14,6 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
@@ -22,7 +21,10 @@ import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -32,6 +34,7 @@ import java.util.jar.JarFile;
  *
  * @author Wu
  */
+//TODO 用委托模式解决重复代码
 @Slf4j
 public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 
@@ -93,15 +96,17 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
         processProperty(ele, beanDefinition);
         beanDefinition.setBeanClassName(className);
         beanDefinition.setSingleton(singleton);
-        try {
-            Class<?> beanClass = Class.forName(className);
-            beanDefinition.setBeanClass(beanClass);
-        } catch (ClassNotFoundException e) {
-            log.error("can't find the class");
-            throw new RuntimeException(e);
+        if (!className.isBlank()) {
+            try {
+                Class<?> beanClass = Class.forName(className);
+                beanDefinition.setBeanClass(beanClass);
+            } catch (ClassNotFoundException e) {
+                log.error("can't find the class");
+                throw new RuntimeException(e);
+            }
+            log.debug("BeanDefinition信息从XML取出:{}", beanDefinition);
+            getRegistry().put(name, beanDefinition);
         }
-        log.debug("BeanDefinition信息从XML取出:{}", beanDefinition);
-        getRegistry().put(name, beanDefinition);
     }
 
     private void processProperty(Element ele, BeanDefinition beanDefinition) {
@@ -136,7 +141,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
             processAnnotationBeanDefinition(clazz);
         }
     }
-
+    //粗略只定义了Component ,因此只需要搜索Component
     protected void processAnnotationBeanDefinition(Class<?> clazz) {
         if (clazz.isAnnotationPresent(Component.class)) {
             String name = clazz.getAnnotation(Component.class).name();
@@ -162,8 +167,10 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
     }
 
     protected void processAnnotationProperty(Class<?> clazz, BeanDefinition beanDefinition) {
-
         Field[] fields = clazz.getDeclaredFields();
+        if (beanDefinition.getPropertyValues() == null) {
+            beanDefinition.setPropertyValues(new ArrayList<>());
+        }
         for (Field field : fields) {
             String name = field.getName();
             if (field.isAnnotationPresent(Value.class)) {
@@ -183,13 +190,12 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
                     BeanReference beanReference = new BeanReference(ref);
                     beanDefinition.getPropertyValues().add(new PropertyValue(name, beanReference));
                 } else {
-                    String ref = field.getType().getName();
+                    String ref = field.getName();
                     BeanReference beanReference = new BeanReference(ref);
                     beanDefinition.getPropertyValues().add(new PropertyValue(name, beanReference));
                 }
             }
         }
-
     }
 
     protected Set<Class<?>> getClasses(String packageName) {
@@ -217,8 +223,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
                     JarFile jar;
                     try {
                         // 获取jar
-                        jar = ((JarURLConnection) url.openConnection())
-                                .getJarFile();
+                        jar = ((JarURLConnection) url.openConnection()).getJarFile();
                         // 从此jar包 得到一个枚举类
                         Enumeration<JarEntry> entries = jar.entries();
                         // 同样的进行循环迭代
@@ -282,17 +287,12 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
         for (File file : dirFiles) {
             // 如果是目录 则继续扫描
             if (file.isDirectory()) {
-                findAndAddClassesInPackageByFile(packageName + "."
-                                + file.getName(), file.getAbsolutePath(), recursive,
-                        classes);
+                findAndAddClassesInPackageByFile(packageName + "." + file.getName(), file.getAbsolutePath(), recursive, classes);
             } else {
                 // 如果是java类文件 去掉后面的.class 只留下类名
-                String className = file.getName().substring(0,
-                        file.getName().length() - 6);
+                String className = file.getName().substring(0, file.getName().length() - 6);
                 try {
                     // 添加到集合中去
-                    //classes.add(Class.forName(packageName + '.' + className));
-                    //经过回复同学的提醒，这里用forName有一些不好，会触发static方法，没有使用classLoader的load干净
                     classes.add(Thread.currentThread().getContextClassLoader().loadClass(packageName + '.' + className));
                 } catch (ClassNotFoundException e) {
                     log.error("添加用户自定义视图类错误 找不到此类的.class文件");
