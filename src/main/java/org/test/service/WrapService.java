@@ -1,4 +1,4 @@
-package org.spring;
+package org.test.service;
 
 
 import org.spring.annotation.Autowired;

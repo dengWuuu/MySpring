@@ -1,4 +1,4 @@
-package org.spring;
+package org.test.service;
 
 /**
  * @author Wu

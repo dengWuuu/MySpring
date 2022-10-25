@@ -2,16 +2,17 @@
 <beans>
 
 
-    <component-scan base-package="org.spring"/>
+    <component-scan base-package="org.test"/>
 
 
-<!--        <bean id="helloWorldService" class="org.spring.HelloWorldServiceImpl" scope="prototype">-->
+<!--        <bean id="helloWorldService" class="org.test.service.impl.HelloWorldServiceImpl" scope="prototype">-->
 <!--            <property name="text" value="Hello World"/>-->
 <!--        </bean>-->
 
-<!--        <bean id="wrapService" class="org.spring.WrapService">-->
+<!--        <bean id="wrapService" class="org.test.service.WrapService">-->
 <!--            <property name="helloWorldService" ref="helloWorldService"/>-->
 <!--        </bean>-->
 
 
 </beans>
+

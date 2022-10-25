@@ -198,6 +198,11 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
         }
     }
 
+    /**
+     * 下面的方法是为了递归查找所有文件里面哪里有注解的 cv大法的
+     * @param packageName
+     * @return
+     */
     protected Set<Class<?>> getClasses(String packageName) {
         Set<Class<?>> classes = new LinkedHashSet<>();
         boolean recursive = true;

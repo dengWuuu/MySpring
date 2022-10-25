@@ -1,8 +1,10 @@
-package org.spring;
+package org.test;
 
 import lombok.extern.slf4j.Slf4j;
 import org.spring.context.ApplicationContext;
 import org.spring.context.ClassPathXmlApplicationContext;
+import org.test.service.HelloWorldService;
+import org.test.service.WrapService;
 
 
 /**
