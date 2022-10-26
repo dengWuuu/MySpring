@@ -1,7 +1,7 @@
 package org.spring.reader;
 
 import lombok.AllArgsConstructor;
-import org.spring.entity.BeanDefinition;
+import org.spring.factory.entity.BeanDefinition;
 import org.spring.io.ResourceLoader;
 
 import java.util.HashMap;

@@ -1,9 +1,9 @@
 package org.spring.factory;
 
 
-import org.spring.entity.BeanDefinition;
-import org.spring.entity.BeanReference;
-import org.spring.entity.PropertyValue;
+import org.spring.factory.entity.BeanDefinition;
+import org.spring.factory.entity.BeanReference;
+import org.spring.factory.entity.PropertyValue;
 
 import java.lang.reflect.Field;
 

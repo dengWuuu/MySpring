@@ -1,7 +1,7 @@
 package org.spring.factory;
 
 
-import org.spring.entity.BeanDefinition;
+import org.spring.factory.entity.BeanDefinition;
 
 /**
  * Bean工厂接口

@@ -2,9 +2,9 @@ package org.spring.reader;
 
 import lombok.extern.slf4j.Slf4j;
 import org.spring.annotation.*;
-import org.spring.entity.BeanDefinition;
-import org.spring.entity.BeanReference;
-import org.spring.entity.PropertyValue;
+import org.spring.factory.entity.BeanDefinition;
+import org.spring.factory.entity.BeanReference;
+import org.spring.factory.entity.PropertyValue;
 import org.spring.io.ResourceLoader;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -154,19 +154,13 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
             processAnnotationProperty(clazz, beanDefinition);
             beanDefinition.setBeanClassName(className);
             beanDefinition.setSingleton(singleton);
-            try {
-                Class<?> beanClass = Class.forName(className);
-                beanDefinition.setBeanClass(beanClass);
-            } catch (ClassNotFoundException e) {
-                log.error("can't find the class");
-                throw new RuntimeException(e);
-            }
+
             log.debug("BeanDefinition信息从XML取出:{}", beanDefinition);
             getRegistry().put(name, beanDefinition);
         }
     }
 
-    protected void processAnnotationProperty(Class<?> clazz, BeanDefinition beanDefinition) {
+    public static void processAnnotationProperty(Class<?> clazz, BeanDefinition beanDefinition) {
         Field[] fields = clazz.getDeclaredFields();
         if (beanDefinition.getPropertyValues() == null) {
             beanDefinition.setPropertyValues(new ArrayList<>());

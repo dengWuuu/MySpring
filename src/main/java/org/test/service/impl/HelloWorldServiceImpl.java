@@ -11,8 +11,14 @@ public class HelloWorldServiceImpl implements HelloWorldService {
 
     @Value("跑起来了注解？")
     private String text;
+
     @Override
     public void saySomething() {
         System.out.println(text);
+    }
+
+    @Override
+    public String getString() {
+        return text;
     }
 }

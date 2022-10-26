@@ -1,6 +1,6 @@
 package org.spring.context;
 
-import org.spring.entity.BeanDefinition;
+import org.spring.factory.entity.BeanDefinition;
 import org.spring.factory.AbstractBeanFactory;
 import org.spring.factory.AutowiredCapableBeanFactory;
 import org.spring.io.ResourceLoader;
@@ -9,7 +9,6 @@ import org.spring.reader.XmlBeanDefinitionReader;
 import java.util.Map;
 
 /**
- *
  * 程序上下文类实现
  */
 public class ClassPathXmlApplicationContext extends AbstractApplicationContext {
@@ -37,6 +36,7 @@ public class ClassPathXmlApplicationContext extends AbstractApplicationContext {
 
     /**
      * 创建Bean工厂并且通过Reader读取XML扫描Bean的信息
+     *
      * @return
      * @throws Exception
      */
@@ -51,4 +51,14 @@ public class ClassPathXmlApplicationContext extends AbstractApplicationContext {
         return beanFactory;
     }
 
+
+    public void addNewBeanDefinition(String name, BeanDefinition definition) throws Exception {
+        XmlBeanDefinitionReader.processAnnotationProperty(definition.getBeanClass(), definition);
+        beanFactory.registerBeanDefinition(name, definition);
+
+    }
+
+    public void refreshBeanFactory() throws Exception {
+        prepareBeanFactory((AbstractBeanFactory) beanFactory);
+    }
 }

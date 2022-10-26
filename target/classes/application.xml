@@ -5,11 +5,11 @@
     <component-scan base-package="org.test"/>
 
 
-<!--        <bean id="helloWorldService" class="org.test.HelloWorldServiceImpl" scope="prototype">-->
+<!--        <bean id="helloWorldService" class="org.test.service.impl.HelloWorldServiceImpl" scope="prototype">-->
 <!--            <property name="text" value="Hello World"/>-->
 <!--        </bean>-->
 
-<!--        <bean id="wrapService" class="org.test.WrapService">-->
+<!--        <bean id="wrapService" class="org.test.service.WrapService">-->
 <!--            <property name="helloWorldService" ref="helloWorldService"/>-->
 <!--        </bean>-->
 

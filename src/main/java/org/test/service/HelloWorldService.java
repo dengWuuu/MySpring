@@ -6,4 +6,6 @@ package org.test.service;
  */
 public interface HelloWorldService {
     public void saySomething();
+
+    String getString();
 }
