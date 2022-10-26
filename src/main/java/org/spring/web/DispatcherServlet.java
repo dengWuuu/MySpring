@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.spring.annotation.Controller;
 import org.spring.annotation.RequestMapping;
 import org.spring.context.ClassPathXmlApplicationContext;
-import org.spring.factory.entity.BeanDefinition;
+import org.spring.entity.BeanDefinition;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServlet;

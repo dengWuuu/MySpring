@@ -1,6 +1,6 @@
 package org.spring.context;
 
-import org.spring.factory.entity.BeanDefinition;
+import org.spring.entity.BeanDefinition;
 import org.spring.factory.AbstractBeanFactory;
 import org.spring.factory.AutowiredCapableBeanFactory;
 import org.spring.io.ResourceLoader;

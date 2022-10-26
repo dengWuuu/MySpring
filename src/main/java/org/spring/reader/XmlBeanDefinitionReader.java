@@ -2,9 +2,9 @@ package org.spring.reader;
 
 import lombok.extern.slf4j.Slf4j;
 import org.spring.annotation.*;
-import org.spring.factory.entity.BeanDefinition;
-import org.spring.factory.entity.BeanReference;
-import org.spring.factory.entity.PropertyValue;
+import org.spring.entity.BeanDefinition;
+import org.spring.entity.BeanReference;
+import org.spring.entity.PropertyValue;
 import org.spring.io.ResourceLoader;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
