@@ -9,14 +9,16 @@ package org.spring.context;
 public interface ApplicationContext {
     /**
      * 通过类来获取
+     *
      * @param clazz
      * @return
      * @throws Exception
      */
-    Object getBean(Class clazz) throws Exception;
+    Object getBean(Class<?> clazz) throws Exception;
 
     /**
      * 通过名字来获取
+     *
      * @param beanName
      * @return
      * @throws Exception

@@ -137,10 +137,11 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 
     protected void parseAnnotation(String basePackage) {
         Set<Class<?>> classes = getClasses(basePackage);
-        for (Class clazz : classes) {
+        for (Class<?> clazz : classes) {
             processAnnotationBeanDefinition(clazz);
         }
     }
+
     //粗略只定义了Component ,因此只需要搜索Component
     protected void processAnnotationBeanDefinition(Class<?> clazz) {
         if (clazz.isAnnotationPresent(Component.class)) {
@@ -194,6 +195,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 
     /**
      * 下面的方法是为了递归查找所有文件里面哪里有注解的 cv大法的
+     *
      * @param packageName
      * @return
      */
