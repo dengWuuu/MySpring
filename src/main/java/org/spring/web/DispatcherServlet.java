@@ -21,6 +21,20 @@ import java.util.*;
  * @author Wu
  * @date 2022年10月26日 19:10
  */
+
+/*
+用户发送请求至前端控制器 DispatcherServlet。
+DispatcherServlet 收到请求调用 HandlerMapping 处理器映射器。
+处理器映射器根据请求url找到具体的处理器，生成处理器对象及处理器拦截器(如果有则生成)一并返回给 DispatcherServlet。
+DispatcherServlet 通过 HandlerAdapter 处理器适配器调用处理器。
+执行处理器（Controller，也叫后端控制器）。
+Controller 执行完成返回 ModelAndView。
+HandlerAdapter 将 controller 执行结果 ModelAndView 返回给 DispatcherServlet。
+DispatcherServlet 将 ModelAndView 传给 ViewReslover 视图解析器。
+ViewReslover 解析后返回具体 View。
+DispatcherServlet 对 View 进行渲染视图（即将模型数据填充至视图中）。
+DispatcherServlet 响应用户。
+ */
 @Slf4j
 public class DispatcherServlet extends HttpServlet {
 
@@ -28,10 +42,16 @@ public class DispatcherServlet extends HttpServlet {
 
     private final List<String> classNames = new ArrayList<>();
 
+    /**
+     * url对应的方法
+     */
     private final Map<String, Method> handlerMapping = new HashMap<>();
 
     private final HashSet<Class<?>> classes = new HashSet<>();
 
+    /**
+     * url对应的controller
+     */
     private final Map<String, Object> controllerMap = new HashMap<>();
 
     private ClassPathXmlApplicationContext xmlApplicationContext;
@@ -158,7 +178,7 @@ public class DispatcherServlet extends HttpServlet {
         }
         for (String className : classNames) {
             try {
-                //实例化Controller
+                //交给Bean工厂来生成Controller单例
                 Class<?> clazz = Class.forName(className);
                 if (clazz.isAnnotationPresent(Controller.class)) {
                     classes.add(clazz);
@@ -172,6 +192,7 @@ public class DispatcherServlet extends HttpServlet {
                 e.printStackTrace();
             }
         }
+        log.debug("让我看看有什么Controller{}", classes);
         try {
             //工厂干活把新的bean弄出来
             xmlApplicationContext.refreshBeanFactory();
@@ -185,7 +206,10 @@ public class DispatcherServlet extends HttpServlet {
      * 和url对应的controller
      */
     private void initHandlerMapping() {
-        if (classes.isEmpty()) return;
+        if (classes.isEmpty()){
+            log.debug("没有controller");
+            return;
+        }
         try {
             for (Class<?> clazz : classes) {
                 String baseUrl = "";
