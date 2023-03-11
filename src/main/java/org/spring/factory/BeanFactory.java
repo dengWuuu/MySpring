@@ -11,7 +11,7 @@ import org.spring.entity.BeanDefinition;
 public interface BeanFactory {
 
     Object getBean(String name) throws Exception;
-    Object getBean(Class clazz) throws Exception;
+    Object getBean(Class<?> clazz) throws Exception;
     void registerBeanDefinition(String name, BeanDefinition beanDefinition) throws Exception;
 
 }

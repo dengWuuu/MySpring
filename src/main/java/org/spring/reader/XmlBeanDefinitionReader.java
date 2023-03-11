@@ -186,6 +186,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
                     beanDefinition.getPropertyValues().add(new PropertyValue(name, beanReference));
                 } else {
                     String ref = field.getName();
+                    log.debug("ref信息{}", ref);
                     BeanReference beanReference = new BeanReference(ref);
                     beanDefinition.getPropertyValues().add(new PropertyValue(name, beanReference));
                 }
@@ -285,6 +286,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
         // 自定义过滤规则 如果可以循环(包含子目录) 或则是以.class结尾的文件(编译好的java类文件)
         File[] dirFiles = dir.listFiles(file -> (recursive && file.isDirectory()) || (file.getName().endsWith(".class")));
         // 循环所有文件
+        assert dirFiles != null;
         for (File file : dirFiles) {
             // 如果是目录 则继续扫描
             if (file.isDirectory()) {

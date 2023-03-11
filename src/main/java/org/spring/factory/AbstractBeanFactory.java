@@ -33,7 +33,7 @@ public abstract class AbstractBeanFactory implements BeanFactory {
     }
 
     @Override
-    public Object getBean(Class clazz) throws Exception {
+    public Object getBean(Class<?> clazz) throws Exception {
         BeanDefinition beanDefinition = null;
         for (Map.Entry<String, BeanDefinition> entry : beanDefinitionMap.entrySet()) {
             Class<?> tmpClass = entry.getValue().getBeanClass();
